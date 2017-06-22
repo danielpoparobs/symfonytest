@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+    php:
+#        image: php:fpm
+        build: ./docker/php
+        volumes:
+            - ./application:/var/www/application
+        working_dir: /var/www/application
+        container_name: php
+
+    nginx:
+        build: ./docker/nginx
+        ports:
+            - 80:80
+        volumes:
+            - ./application:/var/www/application
+        links:
+            - php
+        working_dir: /var/www/application
+        container_name: nginx
+
+    composer:
+        image: composer/composer
+        volumes:
+            - ./application:/var/www/application
+        working_dir: /var/www/application
+        container_name: composer
