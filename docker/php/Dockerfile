@@ -1,5 +1,4 @@
 FROM php:7.0-fpm
 
-COPY php-fpm.conf /etc/php-fpm.conf
-RUN useradd -ms /bin/bash docker
-USER docker
+RUN usermod -u 1000 www-data
+RUN chown www-data:www-data -R /var/www/

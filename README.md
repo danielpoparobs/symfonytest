@@ -18,8 +18,6 @@ $ docker-compose up -d
 $ docker-compose run composer install
 ```
 
-*
-
 Now you can access the application in your browser at http://localhost
 
 Enjoy :-)
