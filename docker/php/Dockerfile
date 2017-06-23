@@ -1,4 +1,8 @@
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 
 RUN usermod -u 1000 www-data
-RUN chown www-data:www-data -R /var/www/
+
+ADD start.sh /start.sh
+RUN chmod -v +x /start.sh
+
+CMD ["/start.sh"]
