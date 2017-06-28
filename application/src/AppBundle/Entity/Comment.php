@@ -13,10 +13,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="symfony_demo_comment")
+ * @ExclusionPolicy("all")
  *
  * Defines the properties of the Comment entity to represent the blog comments.
  * See https://symfony.com/doc/current/book/doctrine.html#creating-an-entity-class
@@ -35,6 +40,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Expose
      */
     private $id;
 
@@ -43,6 +49,8 @@ class Comment
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
+     * @Groups({"Details"})
      */
     private $post;
 
@@ -57,6 +65,7 @@ class Comment
      *     max=10000,
      *     maxMessage="comment.too_long"
      * )
+     * @Expose
      */
     private $content;
 
@@ -65,6 +74,7 @@ class Comment
      *
      * @ORM\Column(type="datetime")
      * @Assert\DateTime
+     * @Expose
      */
     private $publishedAt;
 
@@ -73,6 +83,7 @@ class Comment
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
      */
     private $author;
 

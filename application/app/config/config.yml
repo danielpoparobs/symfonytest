@@ -8,6 +8,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
 
 # These are the configuration parameters that define the application's behavior
 # and which are independent from the underlying technical infrastructure
@@ -83,3 +84,66 @@ doctrine:
 swiftmailer:
     url : '%env(MAILER_URL)%'
     spool: { type: memory }
+
+# Nelmio CORS Configuration
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: ['*']
+        allow_headers: ['*']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        max_age: 3600
+        hosts: []
+        origin_regex: false
+
+# FOSRest Configuration
+fos_rest:
+    routing_loader:
+        default_format: json
+        include_format: false
+    body_converter:
+        enabled: true
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+    format_listener:
+        enabled: true
+        rules:
+            - { path: '^/api/', priorities: ['json'], fallback_format: json, prefer_extension: true}
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }
+    serializer:
+        serialize_null: true
+    view:
+        view_response_listener: 'force'
+        templating_formats:
+            html: false
+    param_fetcher_listener: 'force'
+
+# Nelmio API Doc
+nelmio_api_doc:
+    sandbox:
+        accept_type:        "application/json"
+        body_format:
+            formats:        [ "json" ]
+            default_format: "json"
+        request_format:
+            formats:
+                json:       "application/json"
+    swagger:
+        api_base_path:        /api/
+        swagger_version:      '1.2'
+        api_version:          'v1'
+        info:
+            title:                Symfony3
+            description:          'Symfony Test API'
+            TermsOfServiceUrl:    null
+            contact:              null
+            license:              null
+            licenseUrl:           null
+    cache:
+        enabled:              false
+        file:                 '%kernel.cache_dir%/api-doc.cache'
+
+jms_serializer:
+    metadata:
+        auto_detection: true

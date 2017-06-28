@@ -51,6 +51,52 @@ class PostRepository extends EntityRepository
         return $this->createPaginator($query, $page);
     }
 
+
+    /**
+     * Find latest x posts
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findLatestX($limit = 10)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT p, a
+                FROM AppBundle:Post p
+                JOIN p.author a                
+                WHERE p.publishedAt <= :now               
+                ORDER BY p.publishedAt DESC 
+            ')
+            ->setParameter('now', new \DateTime());
+
+        return $query->setMaxResults($limit)->getResult();
+    }
+
+    /**
+     * Find latest posts by page
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findLatestByPage($page = 1)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT p, a
+                FROM AppBundle:Post p
+                JOIN p.author a               
+                WHERE p.publishedAt <= :now               
+                ORDER BY p.publishedAt DESC 
+            ')
+            ->setParameter('now', new \DateTime())
+            ->setMaxResults(10)
+            ->setFirstResult(($page*10)-10);
+
+        return $query->getResult();
+    }
+
+
     private function createPaginator(Query $query, $page)
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query));

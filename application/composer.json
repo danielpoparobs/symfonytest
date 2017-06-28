@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle/",
-            "CodeExplorerBundle\\": "src/CodeExplorerBundle/"
+            "CodeExplorerBundle\\": "src/CodeExplorerBundle/",
+            "ApiBundle\\": "src/ApiBundle/"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
@@ -32,7 +33,12 @@
         "symfony/symfony"                      : "^3.3",
         "twig/extensions"                      : "^1.5",
         "twig/twig"                            : "^1.28 || ^2.0",
-        "white-october/pagerfanta-bundle"      : "^1.0"
+        "white-october/pagerfanta-bundle"      : "^1.0",
+        "friendsofsymfony/rest-bundle"         : "@stable",
+        "jms/serializer-bundle"                : "@stable",
+        "nelmio/api-doc-bundle"                : "^2.13",
+        "nelmio/cors-bundle"                   : "^1.0||^2.0",
+        "swagger-api/swagger-ui"               : "^3.0"
     },
     "require-dev": {
         "dama/doctrine-test-bundle"            : "^1.0",

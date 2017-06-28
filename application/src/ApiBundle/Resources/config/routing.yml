@@ -1,0 +1,7 @@
+posts:
+    type:     rest
+    resource: ApiBundle\Controller\PostController
+
+comments:
+    type:     rest
+    resource: ApiBundle\Controller\CommentController

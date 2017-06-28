@@ -1,3 +1,8 @@
+api:
+    type: rest
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    prefix:   /api/v1
+
 # These first lines load the all routes defined as @Route() annotations in any
 # controller defined inside the src/AppBundle/Controller/ directory. Controllers
 # are loaded recursively, so you can separate them into subdirectories.

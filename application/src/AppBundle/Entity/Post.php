@@ -14,10 +14,16 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
+
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\Table(name="symfony_demo_post")
+ * @ExclusionPolicy("all")
  *
  * Defines the properties of the Post entity to represent the blog posts.
  *
@@ -46,6 +52,7 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Expose
      */
     private $id;
 
@@ -54,6 +61,7 @@ class Post
      *
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @Expose
      */
     private $title;
 
@@ -61,6 +69,7 @@ class Post
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Expose
      */
     private $slug;
 
@@ -69,6 +78,7 @@ class Post
      *
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="post.blank_summary")
+     * @Expose
      */
     private $summary;
 
@@ -78,6 +88,8 @@ class Post
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="post.blank_content")
      * @Assert\Length(min=10, minMessage="post.too_short_content")
+     * @Expose
+     * @Groups({"Details"})
      */
     private $content;
 
@@ -94,6 +106,7 @@ class Post
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
      */
     private $author;
 
@@ -106,6 +119,8 @@ class Post
      *      orphanRemoval=true
      * )
      * @ORM\OrderBy({"publishedAt": "DESC"})
+     * @Expose
+     * @Groups({"Details"})
      */
     private $comments;
 
@@ -116,6 +131,8 @@ class Post
      * @ORM\JoinTable(name="symfony_demo_post_tag")
      * @ORM\OrderBy({"name": "ASC"})
      * @Assert\Count(max="4", maxMessage="post.too_many_tags")
+     * @Expose
+     * @Groups({"Details"})
      */
     private $tags;
 

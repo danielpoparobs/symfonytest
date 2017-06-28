@@ -1,7 +1,10 @@
 version: '2'
 
 services:
-
+    swagger:
+        build: ./docker/swagger
+        ports:
+            - 8001:8001
     php:
         build: ./docker/php
         working_dir: /var/www/application
